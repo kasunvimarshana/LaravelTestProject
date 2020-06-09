@@ -36,4 +36,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function deposits(){
+        return $this->hasMany('App\Deposit', 'user_id', 'id');
+    }
+    
+    public function withdrawals(){
+        return $this->hasMany('App\Withdrawal', 'user_id', 'id');
+    }
+    
+    public function totalDeposit(){
+        return $this->deposits()->sum('balance');
+    }
+    
+    public function totalWithdrawal(){
+        return $this->withdrawals()->sum('balance');
+    }
+    
+    public function getTotalAmount(){
+        return ($this->totalDeposit() - $this->totalWithdrawal());
+    }
 }
