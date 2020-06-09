@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => []], function(){
+Route::group(['middleware' => ['authMiddleware']], function(){
     Route::get('home', array('uses' => 'UserController@home'))->name('home');
     
     Route::get('money_transfer', array('uses' => 'TransactionController@create'))->name('transaction.create');
@@ -21,7 +21,7 @@ Route::group(['middleware' => []], function(){
     Route::get('transaction_data', array('uses' => 'TransactionController@createDetailView'))->name('transaction_data');
 });
 
-Route::group(['middleware' => []], function(){
+Route::group([], function(){
     Route::get('login', array('uses' => 'LoginController@create'))->name('login.create');
     Route::post('login', array('uses' => 'LoginController@doLogin'))->name('login.do');
     Route::get('logout', array('uses' => 'LoginController@doLogout'))->name('login.doLogout');
